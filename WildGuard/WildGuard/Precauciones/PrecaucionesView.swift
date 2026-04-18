@@ -17,7 +17,7 @@ struct PrecaucionesView: View {
             
             VStack(spacing: 16) {
                 
-                Text("⚠️ Precauciones para \(animal)")
+                Text("Precauciones para \(animal)")
                     .font(.title.bold())
                     .foregroundColor(Color.appTextPrimary)
                     .multilineTextAlignment(.center)
