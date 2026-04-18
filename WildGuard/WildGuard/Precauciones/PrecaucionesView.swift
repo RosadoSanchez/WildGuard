@@ -9,27 +9,39 @@ struct PrecaucionesView: View {
     @State private var isLoading = false
     
     var body: some View {
-        VStack(spacing: 16) {
+        
+        ZStack {
             
-            Text("⚠️ Precauciones para \(animal)")
-                .font(.title.bold())
-                .multilineTextAlignment(.center)
+            Color.appBackground
+                .ignoresSafeArea()
             
-            if isLoading {
-                ProgressView("Generando precauciones...")
-            } else {
-                ForEach(precautions, id: \.self) { item in
-                    Text("• \(item)")
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding()
-                        .background(Color.orange.opacity(0.15))
-                        .cornerRadius(12)
+            VStack(spacing: 16) {
+                
+                Text("⚠️ Precauciones para \(animal)")
+                    .font(.title.bold())
+                    .foregroundColor(Color.appTextPrimary)
+                    .multilineTextAlignment(.center)
+                
+                if isLoading {
+                    ProgressView("Generando precauciones...")
+                        .tint(Color.dangerModerateText)
+                        .foregroundColor(Color.appTextSecondary)
+                } else {
+                    ForEach(precautions, id: \.self) { item in
+                        Text("• \(item)")
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding()
+                            .background(Color.dangerCautionBg)
+                            .foregroundColor(Color.appTextDark)
+                            .cornerRadius(12)
+                            .shadow(color: Color.black.opacity(0.05), radius: 4)
+                    }
                 }
+                
+                Spacer()
             }
-            
-            Spacer()
+            .padding()
         }
-        .padding()
         .onAppear {
             Task {
                 await generatePrecautions()
@@ -77,3 +89,4 @@ struct PrecaucionesView: View {
         }
     }
 }
+

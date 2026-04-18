@@ -16,58 +16,93 @@ struct SOSView: View {
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
-
-        VStack(spacing: 20) {
+        
+        ZStack {
             
-            Text("EMERGENCIA")
-                .font(.largeTitle)
-                .bold()
-                .foregroundColor(.white)
+            Color.dangerHighBg
+                .ignoresSafeArea()
             
-            Text("Ubicación:")
-                .foregroundColor(.white.opacity(0.7))
-            
-            Text("\(location.latitude), \(location.longitude)")
-                .foregroundColor(.white)
-                .font(.headline)
-            
-            Text(description)
-                .foregroundColor(.white)
-                .padding()
-                .background(Color.white.opacity(0.1))
-                .cornerRadius(12)
-            
-            Spacer()
-            
-            VStack(spacing: 12) {
+            VStack(spacing: 20) {
                 
-                Button("Llamar 911") {
-                    callNumber("9514763358")
+                // HEADER
+                VStack(spacing: 8) {
+                    
+                    Text("EMERGENCIA")
+                        .font(.largeTitle.bold())
+                        .foregroundColor(Color.dangerHighText)
+                    
+                    Text("Ubicación actual")
+                        .font(.subheadline)
+                        .foregroundColor(Color.appTextSecondary)
+                    
+                    Text("\(location.latitude), \(location.longitude)")
+                        .font(.footnote)
+                        .foregroundColor(Color.appTextDark)
+                        .padding(.horizontal)
+                        .padding(.vertical, 6)
+                        .background(Color.white)
+                        .cornerRadius(10)
                 }
-                .frame(maxWidth: .infinity)
-                .padding()
-                .background(Color.red)
-                .foregroundColor(.white)
-                .cornerRadius(12)
+                .padding(.top, 20)
                 
-                Button("Control Animal") {
-                    callNumber("9514763358")
+                // DESCRIPCIÓN
+                Text(description)
+                    .font(.body)
+                    .foregroundColor(Color.appTextDark)
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(Color.white)
+                    .cornerRadius(12)
+                    .shadow(color: Color.black.opacity(0.05), radius: 4)
+                
+                Spacer()
+                
+                // ACTIONS
+                VStack(spacing: 12) {
+                    
+                    Button(action: {
+                        callNumber("9514763358")
+                    }) {
+                        Text("Llamar 911")
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color.dangerHighText)
+                            .foregroundColor(.white)
+                            .cornerRadius(12)
+                            .shadow(color: Color.dangerHighText.opacity(0.3), radius: 6)
+                    }
+                    
+                    Button(action: {
+                        callNumber("9514763358")
+                    }) {
+                        Text("Control Animal")
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color.dangerModerateText)
+                            .foregroundColor(.white)
+                            .cornerRadius(12)
+                            .shadow(color: Color.dangerModerateText.opacity(0.3), radius: 6)
+                    }
+                    
+                    Button(action: {
+                        dismiss()
+                    }) {
+                        Text("Cerrar")
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color.appTextTertiary.opacity(0.2))
+                            .foregroundColor(Color.appTextDark)
+                            .cornerRadius(12)
+                    }
                 }
-                .frame(maxWidth: .infinity)
-                .padding()
-                .background(Color.orange)
-                .foregroundColor(.white)
-                .cornerRadius(12)
             }
+            .padding()
         }
-        .padding()
-        .background(Color.green.opacity(0.9))
         .onAppear {
             generateDescription()
         }
     }
     
-
     func generateDescription() {
         description = "Se reporta posible presencia de fauna silvestre cerca del usuario. Se recomienda mantener distancia, evitar contacto y notificar a autoridades correspondientes."
     }

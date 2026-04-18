@@ -9,53 +9,64 @@ struct MapacheLearningView: View {
     @State private var isLoading = false
     
     var body: some View {
-        ScrollView {
+        
+        ZStack {
+            Color.appBackground
+                .ignoresSafeArea()
             
-            VStack(spacing: 16) {
+            ScrollView {
                 
-                Image(animalName)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 110, height: 110)
-                    .clipShape(Circle())
-                    .overlay(
-                        Circle()
-                            .stroke(Color.white.opacity(0.3), lineWidth: 2)
-                    )
-                    .shadow(radius: 8)
-                
-                Text(animalName)
-                    .font(.largeTitle.bold())
-                
-                // LOADING / FACTS
-                if isLoading {
-                    ProgressView("Generando con AI...")
-                } else {
-                    ForEach(facts, id: \.self) { fact in
-                        Text("• \(fact)")
-                            .frame(maxWidth: .infinity, alignment: .leading)
+                VStack(spacing: 16) {
+                    
+                    Image(animalName)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 110, height: 110)
+                        .clipShape(Circle())
+                        .overlay(
+                            Circle()
+                                .stroke(Color.appGreenLight.opacity(0.4), lineWidth: 2)
+                        )
+                        .shadow(color: Color.appGreen.opacity(0.2), radius: 8)
+                    
+                    Text(animalName)
+                        .font(.largeTitle.bold())
+                        .foregroundColor(Color.appTextPrimary)
+                    
+                    // LOADING / FACTS
+                    if isLoading {
+                        ProgressView("Generando con AI...")
+                            .tint(Color.appGreen)
+                            .foregroundColor(Color.appTextSecondary)
+                    } else {
+                        ForEach(facts, id: \.self) { fact in
+                            Text("• \(fact)")
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .padding()
+                                .background(Color.white) // 👈 clave para contraste
+                                .foregroundColor(Color.appTextDark)
+                                .cornerRadius(12)
+                                .shadow(color: Color.black.opacity(0.05), radius: 4)
+                        }
+                    }
+                    
+                    Button(action: {
+                        Task { await generateFacts() }
+                    }) {
+                        Text("Generar con AI")
+                            .frame(maxWidth: .infinity)
                             .padding()
-                            .background(Color.white.opacity(0.1))
+                            .background(Color.appGreen)
+                            .foregroundColor(.white)
                             .cornerRadius(12)
+                            .shadow(color: Color.appGreen.opacity(0.3), radius: 6)
                     }
                 }
-                
-                // BOTÓN
-                Button("Generar con AI") {
-                    Task { await generateFacts() }
-                }
                 .padding()
-                .frame(maxWidth: .infinity)
-                .background(Color.green)
-                .foregroundColor(.white)
-                .cornerRadius(12)
             }
-            .padding()
-            .font(.system(size: 16, weight: .regular, design: .rounded))
         }
     }
     
-    // MARK: - FOUNDATION MODELS CALL
     func generateFacts() async {
         isLoading = true
         
@@ -63,26 +74,23 @@ struct MapacheLearningView: View {
             let session = LanguageModelSession()
             
             let prompt = """
-            Genera un parráfo introductorio corto sobre los osos negros americanos. Habla sobre su habitat, su dieta y sus características.
-            También dame estos datos: Nivel de peligro del animal: 🟢 Bajo riesgo, 🟡 Precaución, 🔴 Alto riesgo
-            Genera 4 datos educativos claros sobre el animal \(animalName).
+                        Genera un parráfo introductorio corto sobre \(animalName). Habla sobre su habitat, su dieta y sus características.
+                        También dame estos datos: Nivel de peligro del animal: 🟢 Bajo riesgo, 🟡 Precaución, 🔴 Alto riesgo
+                        Genera 4 datos educativos claros sobre el animal \(animalName).
 
-            Reglas estrictas para los datos educativos:
-            - NO uses Markdown
-            - NO uses asteriscos (*)
-            - NO uses negritas ni símbolos de formato
-            - Devuelve solo texto plano
-            - Un dato por línea
-            - Una oración únicamente por dato.
-            - Una viñeta por dato
-            """
+                        Reglas estrictas para los datos educativos:
+                        - NO uses Markdown
+                        - NO uses asteriscos (*)
+                        - NO uses negritas ni símbolos de formato
+                        - Devuelve solo texto plano
+                        - Un dato por línea
+                        - Una oración únicamente por dato.
+                        - Una viñeta por dato
+                        """
             
             let response = try await session.respond(to: prompt)
             
-            let cleaned = response.content
-                .replacingOccurrences(of: "**", with: "")
-            
-            let parsed = cleaned
+            let parsed = response.content
                 .split(separator: "\n")
                 .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
                 .filter { !$0.isEmpty }
@@ -100,6 +108,7 @@ struct MapacheLearningView: View {
         }
     }
 }
+
 #Preview {
     VStack {
         MapacheLearningView()

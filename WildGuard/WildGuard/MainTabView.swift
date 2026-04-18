@@ -45,6 +45,6 @@ struct MainTabView: View {
                     Image(systemName: "person.fill")
                     Text("Perfil")
                 }
-        } .accentColor(.green)
+        } .accentColor(Color.appGreen)
     }
 }

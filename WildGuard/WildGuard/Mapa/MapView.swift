@@ -62,10 +62,13 @@ let sightings = [
 ]
 
 // MARK: - View
+import SwiftUI
+import MapKit
+import UIKit
+
 struct MapView: View {
     
     @State private var selectedSighting: Sighting?
-    @State private var showSOSAlert = false
     
     @State private var region = MKCoordinateRegion(
         center: CLLocationCoordinate2D(latitude: 25.65, longitude: -100.29),
@@ -73,10 +76,10 @@ struct MapView: View {
     )
     
     var body: some View {
-        NavigationStack{
+        NavigationStack {
             ZStack {
                 
-                // MAPA (FONDO)
+                // MAPA
                 Map(
                     coordinateRegion: $region,
                     annotationItems: sightings
@@ -86,13 +89,14 @@ struct MapView: View {
                             selectedSighting = sighting
                         } label: {
                             ZStack {
+                                
                                 Circle()
                                     .fill(Color.white)
                                     .frame(width: 44, height: 44)
-                                    .shadow(radius: 4)
+                                    .shadow(color: Color.black.opacity(0.15), radius: 4)
                                 
                                 Image(systemName: "pawprint.fill")
-                                    .foregroundColor(.pink)
+                                    .foregroundColor(Color.appGreen)
                             }
                         }
                     }
@@ -103,13 +107,14 @@ struct MapView: View {
                 VStack {
                     HStack {
                         Text("WildGuard")
-                            .font(.title2)
-                            .fontWeight(.bold)
+                            .font(.title2.bold())
+                            .foregroundColor(Color.appTextPrimary)
                         
                         Spacer()
                         
                         Image(systemName: "pawprint")
                             .font(.title3)
+                            .foregroundColor(Color.appGreen)
                     }
                     .padding()
                     .background(.ultraThinMaterial)
@@ -125,25 +130,27 @@ struct MapView: View {
                         Spacer()
                         
                         VStack(alignment: .leading, spacing: 8) {
+                            
                             Text("\(sightings.count) avistamientos activos")
                                 .font(.headline)
+                                .foregroundColor(Color.appTextPrimary)
                             
                             Text("Toca un pin para ver detalles")
                                 .font(.subheadline)
-                                .foregroundColor(.secondary)
+                                .foregroundColor(Color.appTextSecondary)
                         }
                         .padding()
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(.ultraThinMaterial)
+                        .background(Color.white)
                         .cornerRadius(20)
+                        .shadow(color: Color.black.opacity(0.10), radius: 10, y: 5)
                         .padding()
-                        .shadow(color: .black.opacity(0.15), radius: 10, y: 5)
                     }
                     .transition(.move(edge: .bottom))
                     .animation(.easeInOut, value: selectedSighting != nil)
                 }
                 
-                // BOTÓN SOS (ENCIMA DE TODO)
+                // BOTÓN SOS
                 VStack {
                     Spacer()
                     
@@ -154,24 +161,25 @@ struct MapView: View {
                             SOSView(location: region.center)
                         } label: {
                             Text("SOS")
-                                .font(.title2)
+                                .font(.title2.bold())
                                 .foregroundColor(.white)
                                 .frame(width: 60, height: 60)
-                                .background(Color.red)
+                                .background(Color.dangerHighText) // 🔴 tu sistema de riesgo
                                 .clipShape(Circle())
-                                .shadow(color: .red.opacity(0.4), radius: 10)
+                                .shadow(color: Color.dangerHighText.opacity(0.4), radius: 10)
                         }
                         .padding()
                     }
-                }        }
-            // MODAL DE DETALLE
+                }
+            }
             .sheet(item: $selectedSighting) { sighting in
                 SightingDetailView(sighting: sighting)
                     .presentationDetents([.medium, .large])
                     .presentationDragIndicator(.visible)
             }
         }
-    }}
+    }
+}
 
 // MARK: - Preview
 #Preview {
