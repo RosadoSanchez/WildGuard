@@ -34,6 +34,6 @@ struct MainTabView: View {
                     Text("Mapa")
                 }
         }
-        .accentColor(.green)
+        .accentColor(.appGreen)
     }
 }
