@@ -24,3 +24,4 @@ struct SightingsView: View {
     }
 }
 
+

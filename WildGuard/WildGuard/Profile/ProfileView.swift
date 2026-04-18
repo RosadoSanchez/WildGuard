@@ -1,10 +1,3 @@
-//
-//  ProfileView.swift
-//  WildGuard
-//
-//  Created by Samantha Carmona Santos on 18/04/26.
-//
-
 import SwiftUI
 
 struct ProfileView: View {
