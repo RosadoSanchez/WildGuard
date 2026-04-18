@@ -12,7 +12,24 @@ struct AnimalDetailView: View {
     let animal: Animal
     @State private var viewModel  = AnimalDetailViewModel()
     @State private var showReport = false
+    @State private var speech     = SpeechService()
     @Environment(\.dismiss) private var dismiss
+
+    // Texto completo que se lee en voz alta
+    private var fullSpeechText: String {
+        var parts: [String] = []
+        parts.append("\(animal.name). Nivel de peligro: \(animal.dangerLevel.rawValue).")
+        if !viewModel.aiAdvice.isEmpty {
+            parts.append("Qué hacer ahora. \(viewModel.aiAdvice)")
+        }
+        if !viewModel.aiSteps.isEmpty {
+            parts.append("Pasos inmediatos.")
+            for step in viewModel.aiSteps {
+                parts.append("Paso \(step.number). \(step.title). \(step.detail)")
+            }
+        }
+        return parts.joined(separator: ". ")
+    }
 
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -41,7 +58,10 @@ struct AnimalDetailView: View {
         .toolbarBackground(.visible, for: .navigationBar)
         .sheet(isPresented: $showReport) { ReportConfirmationView(animal: animal) }
         .task { await viewModel.generateAll(for: animal) }
+        .onDisappear { speech.stop() }
     }
+
+    // MARK: - Toolbar
 
     private var backButton: some View {
         Button { dismiss() } label: {
@@ -58,6 +78,8 @@ struct AnimalDetailView: View {
             .frame(width: 34, height: 34)
             .clipShape(Circle())
     }
+
+    // MARK: - Hero card
 
     private var heroCard: some View {
         HStack(spacing: 14) {
@@ -82,13 +104,36 @@ struct AnimalDetailView: View {
         .background(Color.appGreen, in: RoundedRectangle(cornerRadius: 18))
     }
 
+    // MARK: - AI Advice
+
     private var aiAdviceSection: some View {
         VStack(alignment: .leading, spacing: 12) {
+
             HStack(spacing: 6) {
                 Text("Qué hacer ahora")
                     .font(.system(size: 18, weight: .bold)).foregroundStyle(Color.appTextPrimary)
                 Text("✦").font(.system(size: 14)).foregroundStyle(Color.appGreen)
+
+                Spacer()
+
+                // ── Botón escuchar
+                Button {
+                    speech.speak(fullSpeechText)
+                } label: {
+                    HStack(spacing: 5) {
+                        Image(systemName: speech.isSpeaking
+                              ? "stop.circle.fill"
+                              : "speaker.wave.2.fill")
+                            .font(.system(size: 14))
+                        Text(speech.isSpeaking ? "Detener" : "Escuchar")
+                            .font(.system(size: 13, weight: .medium))
+                    }
+                    .foregroundStyle(Color.appGreen)
+                    .padding(.horizontal, 12).padding(.vertical, 6)
+                    .background(Color.appGreenMint.opacity(0.6), in: Capsule())
+                }
             }
+
             VStack(alignment: .leading, spacing: 10) {
                 HStack {
                     Spacer()
@@ -109,6 +154,8 @@ struct AnimalDetailView: View {
         }
     }
 
+    // MARK: - Steps
+
     private var stepsSection: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack(spacing: 6) {
@@ -125,6 +172,8 @@ struct AnimalDetailView: View {
             }
         }
     }
+
+    // MARK: - Shimmers
 
     private func shimmerLines(count: Int) -> some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -149,6 +198,8 @@ struct AnimalDetailView: View {
         .background(.white, in: RoundedRectangle(cornerRadius: 14))
         .shadow(color: .black.opacity(0.04), radius: 4, x: 0, y: 1)
     }
+
+    // MARK: - Report button
 
     private var reportButton: some View {
         Button { showReport = true } label: {
