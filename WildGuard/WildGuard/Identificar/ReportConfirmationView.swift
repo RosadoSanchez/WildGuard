@@ -14,8 +14,7 @@ struct ReportConfirmationView: View {
 
     private var formattedDate: String {
         let f = DateFormatter()
-        f.dateStyle = .medium
-        f.timeStyle = .short
+        f.dateStyle = .medium; f.timeStyle = .short
         f.locale = Locale(identifier: "es_MX")
         return f.string(from: Date())
     }
@@ -24,7 +23,6 @@ struct ReportConfirmationView: View {
         NavigationStack {
             ZStack(alignment: .bottom) {
                 Color.appBackground.ignoresSafeArea()
-
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: 20) {
                         animalCard.padding(.horizontal, 20).padding(.top, 12)
@@ -32,7 +30,6 @@ struct ReportConfirmationView: View {
                         Spacer().frame(height: 100)
                     }
                 }
-
                 bottomButtons.padding(.horizontal, 20).padding(.bottom, 24)
             }
             .navigationTitle("Confirmar reporte")
@@ -54,37 +51,20 @@ struct ReportConfirmationView: View {
         }
     }
 
-    // MARK: - Animal card
-
     private var animalCard: some View {
         VStack(spacing: 12) {
-            Group {
-                if UIImage(named: animal.imageURL) != nil {
-                    Image(animal.imageURL).resizable().scaledToFill()
-                } else {
-                    RoundedRectangle(cornerRadius: 16).fill(Color.appGreenLight)
-                        .overlay {
-                            Image(systemName: "pawprint.fill")
-                                .font(.system(size: 28)).foregroundStyle(.white.opacity(0.6))
-                        }
-                }
-            }
-            .frame(width: 80, height: 80)
-            .clipShape(RoundedRectangle(cornerRadius: 16))
+            AnimalImage(scientificName: animal.scientificName, height: 80)
+                .frame(width: 80, height: 80)
+                .clipShape(RoundedRectangle(cornerRadius: 16))
 
-            Text(animal.name)
-                .font(.system(size: 22, weight: .bold)).foregroundStyle(Color.appTextPrimary)
-            Text(animal.scientificName)
-                .font(.system(size: 14)).italic().foregroundStyle(Color.appTextSecondary)
-
+            Text(animal.name).font(.system(size: 22, weight: .bold)).foregroundStyle(Color.appTextPrimary)
+            Text(animal.scientificName).font(.system(size: 14)).italic().foregroundStyle(Color.appTextSecondary)
             Divider()
-
             HStack {
                 infoRow(label: "Fecha", value: formattedDate)
                 Spacer()
                 infoRow(label: "Zona", value: "Tu ubicación actual")
-            }
-            .padding(.horizontal, 4)
+            }.padding(.horizontal, 4)
         }
         .padding(20)
         .background(.white, in: RoundedRectangle(cornerRadius: 18))
@@ -98,13 +78,10 @@ struct ReportConfirmationView: View {
         }
     }
 
-    // MARK: - Notification section
-
     private var notificationSection: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text("Quién será notificado")
                 .font(.system(size: 18, weight: .bold)).foregroundStyle(Color.appTextPrimary)
-
             VStack(spacing: 16) {
                 radiusCircles.frame(height: 200)
                 Divider()
@@ -114,8 +91,7 @@ struct ReportConfirmationView: View {
                         Text("1 km").font(.system(size: 15, weight: .bold)).foregroundStyle(Color.appTextPrimary)
                         Text("recibirán una alerta").font(.system(size: 15)).foregroundStyle(Color.appTextMedium)
                     }
-                    Text("4 personas aprox.")
-                        .font(.system(size: 15, weight: .bold)).foregroundStyle(Color.appGreen)
+                    Text("4 personas aprox.").font(.system(size: 15, weight: .bold)).foregroundStyle(Color.appGreen)
                 }
             }
             .padding(20)
@@ -129,29 +105,20 @@ struct ReportConfirmationView: View {
             let center = CGPoint(x: geo.size.width / 2, y: geo.size.height / 2)
             let outerR = min(geo.size.width, geo.size.height) * 0.44
             let innerR = outerR * 0.58
-
             ZStack {
-                Circle().fill(Color.radiusCircleOuter)
-                    .frame(width: outerR * 2, height: outerR * 2).position(center)
-                Circle().stroke(Color.radiusCircleStroke.opacity(0.6), lineWidth: 1.5)
-                    .frame(width: outerR * 2, height: outerR * 2).position(center)
+                Circle().fill(Color.radiusCircleOuter).frame(width: outerR * 2, height: outerR * 2).position(center)
+                Circle().stroke(Color.radiusCircleStroke.opacity(0.6), lineWidth: 1.5).frame(width: outerR * 2, height: outerR * 2).position(center)
                 Text("1 km").font(.system(size: 11, weight: .medium)).foregroundStyle(Color.appTextTertiary)
                     .position(x: center.x + outerR - 18, y: center.y - outerR + 14)
-
-                Circle().fill(Color.radiusCircleInner)
-                    .frame(width: innerR * 2, height: innerR * 2).position(center)
-                Circle().stroke(Color.radiusCircleStroke.opacity(0.8), lineWidth: 1.5)
-                    .frame(width: innerR * 2, height: innerR * 2).position(center)
+                Circle().fill(Color.radiusCircleInner).frame(width: innerR * 2, height: innerR * 2).position(center)
+                Circle().stroke(Color.radiusCircleStroke.opacity(0.8), lineWidth: 1.5).frame(width: innerR * 2, height: innerR * 2).position(center)
                 Text("500m").font(.system(size: 11, weight: .medium)).foregroundStyle(Color.appTextTertiary)
                     .position(x: center.x + innerR - 20, y: center.y - innerR + 12)
-
                 Circle().fill(Color.appGreen).frame(width: 20, height: 20).position(center)
                 Circle().fill(.white.opacity(0.4)).frame(width: 8, height: 8).position(center)
             }
         }
     }
-
-    // MARK: - Bottom buttons
 
     private var bottomButtons: some View {
         VStack(spacing: 12) {
@@ -167,26 +134,19 @@ struct ReportConfirmationView: View {
             }
         }
         .padding(.top, 8)
-        .background(
-            LinearGradient(colors: [Color.appBackground.opacity(0), Color.appBackground],
-                           startPoint: .top, endPoint: .bottom).ignoresSafeArea()
-        )
+        .background(LinearGradient(colors: [Color.appBackground.opacity(0), Color.appBackground], startPoint: .top, endPoint: .bottom).ignoresSafeArea())
     }
 }
-
-// MARK: - Success screen
 
 struct ReportSuccessView: View {
     let animal: Animal
     let onDone: () -> Void
-
     var body: some View {
         VStack(spacing: 24) {
             Spacer()
             ZStack {
                 Circle().fill(Color.appGreenMint).frame(width: 90, height: 90)
-                Image(systemName: "checkmark")
-                    .font(.system(size: 36, weight: .bold)).foregroundStyle(Color.appGreen)
+                Image(systemName: "checkmark").font(.system(size: 36, weight: .bold)).foregroundStyle(Color.appGreen)
             }
             VStack(spacing: 8) {
                 Text("¡Avistamiento reportado!")
@@ -197,8 +157,7 @@ struct ReportSuccessView: View {
             }
             Spacer()
             Button(action: onDone) {
-                Text("Listo")
-                    .font(.system(size: 16, weight: .semibold)).foregroundStyle(.white)
+                Text("Listo").font(.system(size: 16, weight: .semibold)).foregroundStyle(.white)
                     .frame(maxWidth: .infinity).padding(.vertical, 16)
                     .background(Color.appGreen, in: RoundedRectangle(cornerRadius: 16))
             }

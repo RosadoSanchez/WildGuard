@@ -10,7 +10,6 @@ import SwiftUI
 struct AnimalDetailView: View {
 
     let animal: Animal
-
     @State private var viewModel  = AnimalDetailViewModel()
     @State private var showReport = false
     @Environment(\.dismiss) private var dismiss
@@ -21,18 +20,14 @@ struct AnimalDetailView: View {
 
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 0) {
-                    heroCard
-                        .padding(.horizontal, 20).padding(.top, 12)
-                    aiAdviceSection
-                        .padding(.horizontal, 20).padding(.top, 24)
-                    stepsSection
-                        .padding(.horizontal, 20).padding(.top, 24)
+                    heroCard.padding(.horizontal, 20).padding(.top, 12)
+                    aiAdviceSection.padding(.horizontal, 20).padding(.top, 24)
+                    stepsSection.padding(.horizontal, 20).padding(.top, 24)
                     Spacer().frame(height: 100)
                 }
             }
 
-            reportButton
-                .padding(.horizontal, 20).padding(.bottom, 16)
+            reportButton.padding(.horizontal, 20).padding(.bottom, 16)
         }
         .navigationBarBackButtonHidden(true)
         .toolbar {
@@ -44,13 +39,9 @@ struct AnimalDetailView: View {
         }
         .toolbarBackground(Color.appBackground, for: .navigationBar)
         .toolbarBackground(.visible, for: .navigationBar)
-        .sheet(isPresented: $showReport) {
-            ReportConfirmationView(animal: animal)
-        }
-        .task { await viewModel.generateAll(for: animal) }  // ← lanza ambas en paralelo
+        .sheet(isPresented: $showReport) { ReportConfirmationView(animal: animal) }
+        .task { await viewModel.generateAll(for: animal) }
     }
-
-    // MARK: - Toolbar
 
     private var backButton: some View {
         Button { dismiss() } label: {
@@ -63,37 +54,16 @@ struct AnimalDetailView: View {
     }
 
     private var animalThumbnail: some View {
-        Group {
-            if UIImage(named: animal.imageURL) != nil {
-                Image(animal.imageURL).resizable().scaledToFill()
-            } else {
-                Circle().fill(Color.appGreenLight)
-                    .overlay {
-                        Image(systemName: "pawprint.fill")
-                            .foregroundStyle(.white.opacity(0.7)).font(.system(size: 12))
-                    }
-            }
-        }
-        .frame(width: 34, height: 34).clipShape(Circle())
+        AnimalImage(scientificName: animal.scientificName, height: 34)
+            .frame(width: 34, height: 34)
+            .clipShape(Circle())
     }
-
-    // MARK: - Hero card
 
     private var heroCard: some View {
         HStack(spacing: 14) {
-            Group {
-                if UIImage(named: animal.imageURL) != nil {
-                    Image(animal.imageURL).resizable().scaledToFill()
-                } else {
-                    RoundedRectangle(cornerRadius: 10).fill(Color.appGreenMedium)
-                        .overlay {
-                            Image(systemName: "pawprint.fill")
-                                .foregroundStyle(.white.opacity(0.5)).font(.system(size: 18))
-                        }
-                }
-            }
-            .frame(width: 64, height: 64)
-            .clipShape(RoundedRectangle(cornerRadius: 12))
+            AnimalImage(scientificName: animal.scientificName, height: 64)
+                .frame(width: 64, height: 64)
+                .clipShape(RoundedRectangle(cornerRadius: 12))
 
             VStack(alignment: .leading, spacing: 4) {
                 Text(animal.name)
@@ -112,8 +82,6 @@ struct AnimalDetailView: View {
         .background(Color.appGreen, in: RoundedRectangle(cornerRadius: 18))
     }
 
-    // MARK: - AI Advice (streaming)
-
     private var aiAdviceSection: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack(spacing: 6) {
@@ -121,14 +89,12 @@ struct AnimalDetailView: View {
                     .font(.system(size: 18, weight: .bold)).foregroundStyle(Color.appTextPrimary)
                 Text("✦").font(.system(size: 14)).foregroundStyle(Color.appGreen)
             }
-
             VStack(alignment: .leading, spacing: 10) {
                 HStack {
                     Spacer()
                     Label("Generado por IA · on device", systemImage: "")
                         .font(.system(size: 11)).foregroundStyle(Color.appTextTertiary)
                 }
-
                 if viewModel.isGenerating && viewModel.aiAdvice.isEmpty {
                     shimmerLines(count: 3)
                 } else {
@@ -143,8 +109,6 @@ struct AnimalDetailView: View {
         }
     }
 
-    // MARK: - Steps (structured FM output)
-
     private var stepsSection: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack(spacing: 6) {
@@ -152,21 +116,15 @@ struct AnimalDetailView: View {
                     .font(.system(size: 18, weight: .bold)).foregroundStyle(Color.appTextPrimary)
                 Text("✦").font(.system(size: 14)).foregroundStyle(Color.appGreen)
             }
-
             if viewModel.isGeneratingSteps && viewModel.aiSteps.isEmpty {
-                // Shimmer de 4 pasos mientras genera
                 VStack(spacing: 10) {
-                    ForEach(0..<4, id: \.self) { _ in
-                        stepShimmer
-                    }
+                    ForEach(0..<4, id: \.self) { _ in stepShimmer }
                 }
             } else {
                 ForEach(viewModel.aiSteps) { StepCard(step: $0) }
             }
         }
     }
-
-    // MARK: - Shimmer helpers
 
     private func shimmerLines(count: Int) -> some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -184,7 +142,6 @@ struct AnimalDetailView: View {
             VStack(alignment: .leading, spacing: 6) {
                 RoundedRectangle(cornerRadius: 4).fill(Color.appShimmer).frame(width: 140, height: 13)
                 RoundedRectangle(cornerRadius: 4).fill(Color.appShimmer).frame(maxWidth: .infinity).frame(height: 11)
-                RoundedRectangle(cornerRadius: 4).fill(Color.appShimmer).frame(width: 100, height: 11)
             }
             Spacer()
         }
@@ -192,8 +149,6 @@ struct AnimalDetailView: View {
         .background(.white, in: RoundedRectangle(cornerRadius: 14))
         .shadow(color: .black.opacity(0.04), radius: 4, x: 0, y: 1)
     }
-
-    // MARK: - Report button
 
     private var reportButton: some View {
         Button { showReport = true } label: {
@@ -210,7 +165,6 @@ struct AnimalDetailView: View {
 
 struct StepCard: View {
     let step: ImmediateStep
-
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
             ZStack {
@@ -218,28 +172,17 @@ struct StepCard: View {
                 Text("\(step.number)").font(.system(size: 13, weight: .bold)).foregroundStyle(.white)
             }
             .padding(.top, 2)
-
             VStack(alignment: .leading, spacing: 3) {
-                Text(step.title)
-                    .font(.system(size: 15, weight: .bold)).foregroundStyle(Color.appTextPrimary)
-                Text(step.detail)
-                    .font(.system(size: 13)).foregroundStyle(Color.appTextSecondary).lineSpacing(2)
+                Text(step.title).font(.system(size: 15, weight: .bold)).foregroundStyle(Color.appTextPrimary)
+                Text(step.detail).font(.system(size: 13)).foregroundStyle(Color.appTextSecondary).lineSpacing(2)
             }
             Spacer()
         }
         .padding(14)
         .background(.white, in: RoundedRectangle(cornerRadius: 14))
-        .overlay(
-            HStack {
-                RoundedRectangle(cornerRadius: 3).fill(Color.appGreen).frame(width: 4)
-                Spacer()
-            },
-            alignment: .leading
-        )
+        .overlay(HStack { RoundedRectangle(cornerRadius: 3).fill(Color.appGreen).frame(width: 4); Spacer() }, alignment: .leading)
         .shadow(color: .black.opacity(0.04), radius: 4, x: 0, y: 1)
     }
 }
 
-#Preview {
-    NavigationStack { AnimalDetailView(animal: Animal.all[0]) }
-}
+#Preview { NavigationStack { AnimalDetailView(animal: Animal.all[0]) } }

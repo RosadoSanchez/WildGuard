@@ -20,47 +20,6 @@ struct DangerBadge: View {
     }
 }
 
-// MARK: - Reusable async image con placeholder
-
-struct AnimalImage: View {
-    let urlString : String
-    let height    : CGFloat
-
-    var body: some View {
-        AsyncImage(url: URL(string: urlString)) { phase in
-            switch phase {
-            case .success(let image):
-                image.resizable().scaledToFill()
-            case .failure:
-                placeholder
-            case .empty:
-                // Shimmer mientras carga
-                Color.appShimmer
-                    .overlay {
-                        ProgressView().tint(Color.appGreenLight)
-                    }
-            @unknown default:
-                placeholder
-            }
-        }
-        .frame(maxWidth: .infinity)
-        .frame(height: height)
-        .clipped()
-    }
-
-    private var placeholder: some View {
-        LinearGradient(
-            colors: [Color.appGreenPale, Color.appGreenLight],
-            startPoint: .topLeading, endPoint: .bottomTrailing
-        )
-        .overlay {
-            Image(systemName: "pawprint.fill")
-                .font(.system(size: 28))
-                .foregroundStyle(.white.opacity(0.6))
-        }
-    }
-}
-
 // MARK: - Animal Card
 
 struct AnimalCard: View {
@@ -69,7 +28,7 @@ struct AnimalCard: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
 
-            AnimalImage(urlString: animal.imageURL, height: 130)
+            AnimalImage(scientificName: animal.scientificName, height: 130)
 
             VStack(alignment: .leading, spacing: 6) {
                 Text(animal.name)

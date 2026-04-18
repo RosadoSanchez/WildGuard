@@ -20,60 +20,56 @@ struct IdentifyAnimalView: View {
         }
     }
 
-    // Agrupa animales en filas de 2
-    private var animalRows: [[Animal]] {
-        stride(from: 0, to: filteredAnimals.count, by: 2).map {
-            Array(filteredAnimals[$0..<min($0 + 2, filteredAnimals.count)])
-        }
-    }
-
     var body: some View {
         ZStack {
             Color.appBackground.ignoresSafeArea()
 
             ScrollView(showsIndicators: false) {
-                LazyVStack(alignment: .leading, pinnedViews: [.sectionHeaders]) {
+                LazyVStack(alignment: .leading, spacing: 0) {
 
+                    // HEADER
                     headerSection
                         .padding(.horizontal, 20)
                         .padding(.top, 8)
                         .padding(.bottom, 4)
 
-                    Section {
-                        VStack(spacing: 12) {
-                            ForEach(animalRows, id: \.first?.id) { row in
-                                HStack(alignment: .top, spacing: 12) {
-                                    ForEach(row) { animal in
-                                        Button {
-                                            selectedAnimal = animal
-                                        } label: {
-                                            AnimalCard(animal: animal)
-                                        }
-                                        .buttonStyle(.plain)
-                                        .frame(maxWidth: .infinity)
-                                    }
-                                    // Si la fila tiene solo 1 card, rellena el otro lado
-                                    if row.count == 1 {
-                                        Color.clear.frame(maxWidth: .infinity)
-                                    }
-                                }
+                    // SEARCH BAR
+                    stickySearchBar
+                        .padding(.bottom, 8)
+
+                    // ✅ GRID FIXED
+                    LazyVGrid(
+                        columns: [
+                            GridItem(.flexible()),
+                            GridItem(.flexible())
+                        ],
+                        spacing: 18
+                    ) {
+                        ForEach(filteredAnimals) { animal in
+                            Button {
+                                selectedAnimal = animal
+                            } label: {
+                                AnimalCard(animal: animal)
+                                    .padding(.horizontal, 3) // 👈 clave
                             }
+                            .buttonStyle(.plain)
                         }
-                        .padding(.horizontal, 20)
-                        .padding(.top, 4)
-
-                        Spacer().frame(height: 110)
-
-                    } header: {
-                        stickySearchBar
                     }
+                    .padding(.horizontal, 2)
+                    .padding(.top, 4)
+
+                    Spacer().frame(height: 100)
                 }
             }
             .safeAreaInset(edge: .bottom, spacing: 0) { bottomButtonArea }
         }
         .navigationBarHidden(true)
-        .navigationDestination(item: $selectedAnimal) { AnimalDetailView(animal: $0) }
-        .sheet(isPresented: $showWizard) { WizardContainerView() }
+        .navigationDestination(item: $selectedAnimal) {
+            AnimalDetailView(animal: $0)
+        }
+        .sheet(isPresented: $showWizard) {
+            WizardContainerView()
+        }
     }
 
     // MARK: - Header
@@ -83,22 +79,25 @@ struct IdentifyAnimalView: View {
             Text("¿Qué viste?")
                 .font(.system(size: 14))
                 .foregroundStyle(Color.appTextSecondary)
+
             Text("Identificar animal")
                 .font(.system(size: 32, weight: .bold))
                 .foregroundStyle(Color.appTextPrimary)
+
             Text("Selecciona el animal que avistaste")
                 .font(.system(size: 15))
                 .foregroundStyle(Color.appTextSecondary)
         }
     }
 
-    // MARK: - Sticky search bar
+    // MARK: - Search bar
 
     private var stickySearchBar: some View {
         HStack(spacing: 10) {
             Image(systemName: "magnifyingglass")
                 .foregroundStyle(Color.appTextTertiary)
                 .font(.system(size: 15))
+
             TextField("Buscar animal...", text: $searchText)
                 .font(.system(size: 15))
                 .foregroundStyle(Color.appTextPrimary)
@@ -110,7 +109,6 @@ struct IdentifyAnimalView: View {
         .padding(.horizontal, 20)
         .padding(.top, 8)
         .padding(.bottom, 10)
-        .background(Color.appBackground)
     }
 
     // MARK: - Bottom button
@@ -137,15 +135,19 @@ struct IdentifyAnimalView: View {
                 Image(systemName: "magnifyingglass.circle.fill")
                     .font(.system(size: 22))
                     .foregroundStyle(.white.opacity(0.85))
+
                 VStack(alignment: .leading, spacing: 1) {
                     Text("No encuentro mi animal")
                         .font(.system(size: 15, weight: .bold))
                         .foregroundStyle(.white)
+
                     Text("Responde unas preguntas y te ayudamos")
                         .font(.system(size: 12))
                         .foregroundStyle(.white.opacity(0.8))
                 }
+
                 Spacer()
+
                 Image(systemName: "chevron.right")
                     .font(.system(size: 14, weight: .semibold))
                     .foregroundStyle(.white.opacity(0.7))
@@ -158,4 +160,8 @@ struct IdentifyAnimalView: View {
     }
 }
 
-#Preview { NavigationStack { IdentifyAnimalView() } }
+#Preview {
+    NavigationStack {
+        IdentifyAnimalView()
+    }
+}
