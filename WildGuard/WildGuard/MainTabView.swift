@@ -19,12 +19,6 @@ struct IdentifyView: View {
     }
 }
 
-struct ProfileView: View {
-    var body: some View {
-        Text("Perfil")
-    }
-}
-
 struct MainTabView: View {
     var body: some View {
         TabView {
@@ -51,7 +45,7 @@ struct MainTabView: View {
                 }
             
             // Perfil
-            ProfileView()
+            ProfileView(profile: sampleProfile)
                 .tabItem {
                     Image(systemName: "person.fill")
                     Text("Perfil")

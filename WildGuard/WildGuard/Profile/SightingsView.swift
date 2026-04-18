@@ -1,3 +1,4 @@
+
 //
 //  SightingsView.swift
 //  WildGuard
@@ -8,13 +9,13 @@
 import SwiftUI
 
 struct SightingsView: View {
-    let sightings: [Sighting]
+    let reports: [Report]
     
     var body: some View {
-        List(sightings) { sighting in
+        List(reports) { report in
             VStack(alignment: .leading) {
-                Text(sighting.title)
-                Text(sighting.date)
+                Text(report.title)
+                Text(report.date)
                     .font(.caption)
                     .foregroundColor(.gray)
             }

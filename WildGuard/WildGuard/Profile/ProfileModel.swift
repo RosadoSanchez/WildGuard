@@ -5,6 +5,13 @@
 //  Created by Samantha Carmona Santos on 18/04/26.
 //
 
+//
+//  ProfileModel.swift
+//  WildGuard
+//
+//  Created by Samantha Carmona Santos on 18/04/26.
+//
+
 import Foundation
 
 struct Profile {
@@ -13,13 +20,13 @@ struct Profile {
     let badge: String
     let badgeIcon: String
     
-    let reports: Int
+    let reportCount: Int
     let species: Int
     let points: Int
     
     let menuItems: [ProfileMenuItem]
     
-    let sightings: [Sighting]
+    let reports: [Report]
     var emergencyContacts: [EmergencyContact]
     let community: [CommunityMember]
 }
@@ -43,7 +50,7 @@ struct CommunityMember: Identifiable {
     let isOnline: Bool
 }
 
-struct Sighting: Identifiable {
+struct Report: Identifiable {
     let id = UUID()
     let title: String
     let date: String
