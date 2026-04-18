@@ -28,9 +28,9 @@ struct AnimalCard: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
 
-            AnimalImage(scientificName: animal.scientificName, height: 130)
+            AnimalImage(scientificName: animal.scientificName, height: 110)
 
-            VStack(alignment: .leading, spacing: 6) {
+            VStack(alignment: .leading, spacing: 16) {
                 Text(animal.name)
                     .font(.system(size: 15, weight: .bold))
                     .foregroundStyle(Color.appTextPrimary)

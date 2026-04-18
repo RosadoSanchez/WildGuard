@@ -30,7 +30,7 @@ struct IdentifyAnimalView: View {
                     // HEADER
                     headerSection
                         .padding(.horizontal, 20)
-                        .padding(.top, 8)
+                        .padding(.top, 20)
                         .padding(.bottom, 4)
 
                     // SEARCH BAR
@@ -55,7 +55,7 @@ struct IdentifyAnimalView: View {
                             .buttonStyle(.plain)
                         }
                     }
-                    .padding(.horizontal, 2)
+                    .padding(.horizontal, 16)
                     .padding(.top, 4)
 
                     Spacer().frame(height: 100)
