@@ -19,7 +19,7 @@ struct MainTabView: View {
         TabView {
             
             // Inicio
-            HomeView()
+            Homeview()
                 .tabItem {
                     Image(systemName: "house.fill")
                     Text("Inicio")
@@ -37,13 +37,6 @@ struct MainTabView: View {
                 .tabItem {
                     Image(systemName: "map.fill")
                     Text("Mapa")
-                }
-            
-            // Perfil
-            ProfileView(profile: sampleProfile)
-                .tabItem {
-                    Image(systemName: "person.fill")
-                    Text("Perfil")
                 }
         } .accentColor(.green)
     }
