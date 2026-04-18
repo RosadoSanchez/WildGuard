@@ -104,14 +104,6 @@ struct MyCollectionView: View {
                     .foregroundStyle(Color.appGreen)
                 }
             }
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                } label: {
-                    Image(systemName: "slider.horizontal.3")
-                        .font(.system(size: 16))
-                        .foregroundStyle(Color.appGreen)
-                }
-            }
         }
         .toolbarBackground(Color.appBackground, for: .navigationBar)
         .toolbarBackground(.visible, for: .navigationBar)
@@ -212,10 +204,6 @@ struct CollectionCard: View {
                         .foregroundStyle(Color.appTextPrimary)
                         .lineLimit(2)
                     Spacer()
-                    Image(systemName: "chevron.right")
-                        .lineLimit(1)
-                        .font(.system(size: 12))
-                        .foregroundStyle(Color.appTextTertiary)
                 }
 
                 // Ubicación
