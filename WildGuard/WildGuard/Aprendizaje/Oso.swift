@@ -35,7 +35,7 @@ struct OsoLearningView: View {
                     
                     // LOADING / FACTS
                     if isLoading {
-                        ProgressView("Generando con IA...")
+                        ProgressView("Generando reporte...")
                             .tint(Color.appGreen)
                             .foregroundColor(Color.appTextSecondary)
                     } else {
@@ -43,7 +43,7 @@ struct OsoLearningView: View {
                             Text("• \(fact)")
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .padding()
-                                .background(Color.white) // 👈 clave para contraste
+                                .background(Color.white)
                                 .foregroundColor(Color.appTextDark)
                                 .cornerRadius(12)
                                 .shadow(color: Color.black.opacity(0.05), radius: 4)
@@ -53,7 +53,7 @@ struct OsoLearningView: View {
                     Button(action: {
                         Task { await generateFacts() }
                     }) {
-                        Text("Generar con IA")
+                        Text("Generar reporte")
                             .frame(maxWidth: .infinity)
                             .padding()
                             .background(Color.appGreen)

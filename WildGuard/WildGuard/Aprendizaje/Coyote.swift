@@ -35,7 +35,7 @@ struct CoyoteLearningView: View {
                     
                     // LOADING / FACTS
                     if isLoading {
-                        ProgressView("Generando con IA...")
+                        ProgressView("Generando reporte...")
                             .tint(Color.appGreen)
                             .foregroundColor(Color.appTextSecondary)
                     } else {
@@ -53,7 +53,7 @@ struct CoyoteLearningView: View {
                     Button(action: {
                         Task { await generateFacts() }
                     }) {
-                        Text("Generar con IA")
+                        Text("Generar reporte")
                             .frame(maxWidth: .infinity)
                             .padding()
                             .background(Color.appGreen)
