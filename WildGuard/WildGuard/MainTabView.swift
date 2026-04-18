@@ -38,6 +38,6 @@ struct MainTabView: View {
                     Image(systemName: "map.fill")
                     Text("Mapa")
                 }
-        } .accentColor(.green)
+        } .accentColor(Color.appGreen)
     }
 }
