@@ -36,12 +36,13 @@ struct ProfileView: View {
                         }
                         
                         // ZONAS DE ALERTA (placeholder)
-                        ProfileRow(
-                            icon: "map",
-                            title: "Zonas de alerta",
-                            subtitle: "Radio personalizado: 1km"
-                        )
-                        .opacity(0.6)
+                        NavigationLink(destination: MapView()) {
+                            ProfileRow(
+                                icon: "map",
+                                title: "Zonas de alerta",
+                                subtitle: "Explorar mapa"
+                            )
+                        }
                         
                         // PROTECCIÓN CIVIL
                         NavigationLink {
