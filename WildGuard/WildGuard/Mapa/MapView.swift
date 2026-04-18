@@ -62,9 +62,6 @@ let sightings = [
 ]
 
 // MARK: - View
-import SwiftUI
-import MapKit
-import UIKit
 
 struct MapView: View {
     
