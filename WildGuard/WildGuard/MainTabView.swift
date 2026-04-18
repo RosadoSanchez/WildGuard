@@ -13,11 +13,6 @@ struct HomeView: View {
     }
 }
 
-struct IdentifyView: View {
-    var body: some View {
-        Text("Identificar")
-    }
-}
 
 struct MainTabView: View {
     var body: some View {
@@ -31,7 +26,7 @@ struct MainTabView: View {
                 }
             
             // Identificar
-            IdentifyView()
+            IdentifyAnimalView()
                 .tabItem {
                     Image(systemName: "magnifyingglass")
                     Text("Identificar")
