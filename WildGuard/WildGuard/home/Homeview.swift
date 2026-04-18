@@ -101,11 +101,13 @@ struct Homeview: View {
 
             Spacer()
 
-            Text("VG")
-                .font(.system(size: 15, weight: .bold))
-                .foregroundStyle(.white)
-                .frame(width: 40, height: 40)
-                .background(Color.appGreen, in: Circle())
+            NavigationLink(destination: ProfileView(profile: sampleProfile)) {
+                Text("VG")
+                    .font(.system(size: 15, weight: .bold))
+                    .foregroundStyle(.white)
+                    .frame(width: 40, height: 40)
+                    .background(Color.appGreen, in: Circle())
+            }
         }
     }
 
