@@ -190,7 +190,7 @@ struct CollectionCard: View {
 
             // Imagen con badge de conteo
             ZStack(alignment: .topTrailing) {
-                AnimalImage(scientificName: item.animal.scientificName, height: 140)
+                AnimalImage(scientificName: item.animal.scientificName, height: 110)
 
                 Text("×\(item.count)")
                     .font(.system(size: 12, weight: .bold))
@@ -206,11 +206,14 @@ struct CollectionCard: View {
                 // Nombre + chevron
                 HStack {
                     Text(item.animal.name)
+                        .multilineTextAlignment(.leading)
+                        .padding(.trailing, 16).lineLimit(1)
                         .font(.system(size: 15, weight: .bold))
                         .foregroundStyle(Color.appTextPrimary)
                         .lineLimit(2)
                     Spacer()
                     Image(systemName: "chevron.right")
+                        .lineLimit(1)
                         .font(.system(size: 12))
                         .foregroundStyle(Color.appTextTertiary)
                 }
@@ -236,6 +239,7 @@ struct CollectionCard: View {
                             .autocorrectionDisabled()
                             .onSubmit { onConfirm() }
                     }
+                    .lineLimit(1)
                     .padding(.horizontal, 10).padding(.vertical, 8)
                     .background(
                         RoundedRectangle(cornerRadius: 10)
@@ -253,15 +257,18 @@ struct CollectionCard: View {
                         Button { onNamingTap() } label: {
                             HStack(spacing: 4) {
                                 Image(systemName: "pencil")
-                                    .font(.system(size: 11))
+                                    .font(.system(size: 6, weight: .light))
                                 Text("Nombrar")
-                                    .font(.system(size: 12, weight: .medium))
+                                    .font(.system(size: 8, weight: .light))
                             }
+                            .lineLimit(1)
                             .foregroundStyle(Color.appGreen)
-                            .padding(.horizontal, 10).padding(.vertical, 5)
+                            .frame(minWidth: 45)
+                            .padding(.horizontal, 5).padding(.vertical, 5)
                             .background(Color.appGreenMint.opacity(0.6), in: Capsule())
                         }
                     }
+                    .lineLimit(1)
                 }
             }
             .padding(12)
