@@ -7,15 +7,13 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct StatsView: View {
     
     let profile: Profile
     
     var body: some View {
         HStack {
-            StatItem(number: "\(profile.reports)", label: "reportes")
+            StatItem(number: "\(profile.reportCount)", label: "reportes")
             Divider()
             StatItem(number: "\(profile.species)", label: "especies")
             Divider()
