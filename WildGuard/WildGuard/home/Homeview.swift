@@ -242,7 +242,7 @@ struct Homeview: View {
                         icon: "leaf.fill",
                         title: "Aprender",
                         subtitle: "de la wildlife",
-                        color: Color.appGreen
+                        color: Color.appYellow
                     )
                 }
             }
