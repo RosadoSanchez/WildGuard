@@ -35,7 +35,7 @@ struct JabaliLearningView: View {
                     
                     // LOADING / FACTS
                     if isLoading {
-                        ProgressView("Generando con AI...")
+                        ProgressView("Generando con IA...")
                             .tint(Color.appGreen)
                             .foregroundColor(Color.appTextSecondary)
                     } else {
@@ -53,7 +53,7 @@ struct JabaliLearningView: View {
                     Button(action: {
                         Task { await generateFacts() }
                     }) {
-                        Text("Generar con AI")
+                        Text("Generar con IA")
                             .frame(maxWidth: .infinity)
                             .padding()
                             .background(Color.appGreen)

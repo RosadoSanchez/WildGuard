@@ -35,7 +35,7 @@ struct ZorroLearningView: View {
                     
                     // LOADING / FACTS
                     if isLoading {
-                        ProgressView("Generando con AI...")
+                        ProgressView("Generando con IA...")
                             .tint(Color.appGreen)
                             .foregroundColor(Color.appTextSecondary)
                     } else {
@@ -53,7 +53,7 @@ struct ZorroLearningView: View {
                     Button(action: {
                         Task { await generateFacts() }
                     }) {
-                        Text("Generar con AI")
+                        Text("Generar con IA")
                             .frame(maxWidth: .infinity)
                             .padding()
                             .background(Color.appGreen)
@@ -102,7 +102,7 @@ struct ZorroLearningView: View {
             
         } catch {
             await MainActor.run {
-                self.facts = ["Error generando información con AI."]
+                self.facts = ["Error generando información con IA."]
                 self.isLoading = false
             }
         }
