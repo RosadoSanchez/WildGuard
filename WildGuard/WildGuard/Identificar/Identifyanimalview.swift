@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct IdentifyAnimalView: View {
+struct Identifyanimalview: View {
     @State private var searchText     = ""
     @State private var showWizard     = false
     @State private var selectedAnimal : Animal? = nil
@@ -37,7 +37,6 @@ struct IdentifyAnimalView: View {
                     stickySearchBar
                         .padding(.bottom, 8)
 
-                    // ✅ GRID FIXED
                     LazyVGrid(
                         columns: [
                             GridItem(.flexible()),
@@ -50,7 +49,7 @@ struct IdentifyAnimalView: View {
                                 selectedAnimal = animal
                             } label: {
                                 AnimalCard(animal: animal)
-                                    .padding(.horizontal, 3) // 👈 clave
+                                    .padding(.horizontal, 3)
                             }
                             .buttonStyle(.plain)
                         }
@@ -162,6 +161,6 @@ struct IdentifyAnimalView: View {
 
 #Preview {
     NavigationStack {
-        IdentifyAnimalView()
+        Identifyanimalview()
     }
 }
