@@ -77,28 +77,27 @@ struct MapView: View {
             ZStack {
                 
                 // MAPA
-                Map(
-                    coordinateRegion: $region,
-                    annotationItems: sightings
-                ) { sighting in
-                    MapAnnotation(coordinate: sighting.coordinate) {
-                        Button {
-                            selectedSighting = sighting
-                        } label: {
-                            ZStack {
-                                
-                                Circle()
-                                    .fill(Color.white)
-                                    .frame(width: 44, height: 44)
-                                    .shadow(color: Color.black.opacity(0.15), radius: 4)
-                                
-                                Image(systemName: "pawprint.fill")
-                                    .foregroundColor(Color.appGreen)
+                Map {
+                    ForEach(sightings) { sighting in
+                        Annotation("", coordinate: sighting.coordinate) {
+                            
+                            Button {
+                                selectedSighting = sighting
+                            } label: {
+                                ZStack {
+                                    
+                                    Circle()
+                                        .fill(Color.white)
+                                        .frame(width: 44, height: 44)
+                                        .shadow(color: Color.black.opacity(0.15), radius: 4)
+                                    
+                                    Image(systemName: "pawprint.fill")
+                                        .foregroundColor(Color.appGreen)
+                                }
                             }
                         }
                     }
-                }
-                .ignoresSafeArea()
+                }                .ignoresSafeArea()
                 
                 // HEADER
                 VStack {
