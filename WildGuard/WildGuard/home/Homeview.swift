@@ -29,15 +29,15 @@ struct NearbySighting: Identifiable {
 
 struct Homeview: View {
 
-    let userName      = "Valeria"
+    let userName      = "María"
     let sightingCount = 3
 
     let captures: [AnimalCapture] = [
-        AnimalCapture(nickname: "Bruno",    icon: "pawprint.fill"),
+        AnimalCapture(nickname: "Bruno",    icon: "teddybear.fill"),
         AnimalCapture(nickname: "Bandit",   icon: "dog.fill"),
         AnimalCapture(nickname: "Bambi",    icon: "hare.fill"),
-        AnimalCapture(nickname: "Colmillo", icon: "exclamationmark.triangle.fill"),
-        AnimalCapture(nickname: "Fantasma", icon: "eye.slash.fill"),
+        AnimalCapture(nickname: "Colmillo", icon: "pawprint.fill"),
+        AnimalCapture(nickname: "Fantasma", icon: "cat.fill"),
     ]
 
     let nearbySightings: [NearbySighting] = [
@@ -103,7 +103,7 @@ struct Homeview: View {
             Spacer()
 
             NavigationLink(destination: ProfileView(profile: sampleProfile)) {
-                Text("VG")
+                Text("MG")
                     .font(.system(size: 15, weight: .bold))
                     .foregroundStyle(.white)
                     .frame(width: 40, height: 40)
@@ -183,7 +183,7 @@ struct Homeview: View {
                 Text("Hola, \(userName)")
                     .font(.system(size: 14))
                     .foregroundStyle(.white.opacity(0.85))
-                Text("\(sightingCount) avistamientos cerca de ti hoy")
+                Text("\(sightings.count) avistamientos cerca de ti hoy")
                     .font(.system(size: 22, weight: .bold))
                     .foregroundStyle(.white)
                     .lineLimit(2)
