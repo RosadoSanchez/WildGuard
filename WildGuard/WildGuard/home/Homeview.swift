@@ -86,11 +86,12 @@ struct Homeview: View {
     private var navbar: some View {
         HStack {
             HStack(spacing: 8) {
-                Image(systemName: "leaf.fill")
-                    .font(.system(size: 14, weight: .semibold))
-                    .foregroundStyle(.white)
+                Image("WildGuardAppIconDisplay")
+                    .resizable()
+                    .scaledToFit()
                     .frame(width: 28, height: 28)
-                    .background(Color.appGreen, in: RoundedRectangle(cornerRadius: 8))
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                
                 Text("WildGuard")
                     .font(.system(size: 16, weight: .semibold))
                     .foregroundStyle(Color.appTextPrimary)
