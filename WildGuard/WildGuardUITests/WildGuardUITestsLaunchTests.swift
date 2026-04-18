@@ -26,7 +26,7 @@ final class WildGuardUITestsLaunchTests: XCTestCase {
         // such as logging into a test account or navigating somewhere in the app
 
         let attachment = XCTAttachment(screenshot: app.screenshot())
-        attachment.name = "Launch Screen"
+        attachment.name = "Launch Screen Test"
         attachment.lifetime = .keepAlways
         add(attachment)
     }
