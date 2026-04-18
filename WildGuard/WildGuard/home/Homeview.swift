@@ -182,7 +182,7 @@ struct Homeview: View {
                 Text("Hola, \(userName)")
                     .font(.system(size: 14))
                     .foregroundStyle(.white.opacity(0.85))
-                Text("\(sightingCount) avistamientos cerca de ti hoy")
+                Text("\(sightings.count) avistamientos cerca de ti hoy")
                     .font(.system(size: 22, weight: .bold))
                     .foregroundStyle(.white)
                     .lineLimit(2)
