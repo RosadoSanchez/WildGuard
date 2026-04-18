@@ -335,4 +335,4 @@ struct NearbyCard: View {
     }
 }
 
-#Preview { HomeView() }
+#Preview { Homeview() }

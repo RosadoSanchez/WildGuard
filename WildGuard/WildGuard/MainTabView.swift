@@ -7,13 +7,6 @@
 
 import SwiftUI
 
-struct HomeView: View {
-    var body: some View {
-        Text("Inicio")
-    }
-}
-
-
 struct MainTabView: View {
     var body: some View {
         TabView {
@@ -26,11 +19,13 @@ struct MainTabView: View {
                 }
             
             // Identificar
-            IdentifyAnimalView()
-                .tabItem {
-                    Image(systemName: "magnifyingglass")
-                    Text("Identificar")
-                }
+            NavigationStack {
+                Identifyanimalview()
+            }
+            .tabItem {
+                Image(systemName: "magnifyingglass")
+                Text("Identificar")
+            }
             
             // Mapa
             MapView()
@@ -38,6 +33,7 @@ struct MainTabView: View {
                     Image(systemName: "map.fill")
                     Text("Mapa")
                 }
-        } .accentColor(Color.appGreen)
+        }
+        .accentColor(.green)
     }
 }
