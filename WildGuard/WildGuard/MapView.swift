@@ -83,7 +83,7 @@ struct MapView: View {
     var body: some View {
         ZStack {
             
-            // 🗺️ 1. MAPA (FONDO)
+            // MAPA (FONDO)
             Map(
                 coordinateRegion: $region,
                 annotationItems: sightings
@@ -106,7 +106,7 @@ struct MapView: View {
             }
             .ignoresSafeArea()
             
-            // 🧠 2. HEADER
+            // HEADER
             VStack {
                 HStack {
                     Text("WildGuard")
@@ -126,7 +126,7 @@ struct MapView: View {
                 Spacer()
             }
             
-            // 📍 3. BOTTOM CARD
+            // BOTTOM CARD
             if selectedSighting == nil {
                 VStack {
                     Spacer()
@@ -150,7 +150,7 @@ struct MapView: View {
                 .animation(.easeInOut, value: selectedSighting != nil)
             }
             
-            // 🔴 4. BOTÓN SOS (ENCIMA DE TODO)
+            // BOTÓN SOS (ENCIMA DE TODO)
             VStack {
                 Spacer()
                 
@@ -172,14 +172,14 @@ struct MapView: View {
                 }
             }
         }
-        // 🚨 ALERT CORRECTAMENTE POSICIONADO
+        // ALERT CORRECTAMENTE POSICIONADO
         .alert("¿Llamar a emergencia?", isPresented: $showSOSAlert) {
             Button("Cancelar", role: .cancel) { }
             Button("Llamar") {
                 callNumber("9514763358")
             }
         }
-        // 🪟 MODAL DE DETALLE
+        // MODAL DE DETALLE
         .sheet(item: $selectedSighting) { sighting in
             SightingDetailView(sighting: sighting)
                 .presentationDetents([.medium, .large])

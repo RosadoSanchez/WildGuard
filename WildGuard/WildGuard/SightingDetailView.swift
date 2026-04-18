@@ -30,7 +30,6 @@ struct SightingDetailView: View {
                 .padding()
             }
 
-            // 🔘 BOTÓN FIJO ABAJO
             Button("Ver precauciones") {
                 // acción
             }
