@@ -87,8 +87,6 @@ struct WizardContainerView: View {
         }
     }
 
-    // MARK: - Progress bar
-
     private var progressBar: some View {
         GeometryReader { geo in
             ZStack(alignment: .leading) {
@@ -101,8 +99,6 @@ struct WizardContainerView: View {
         .frame(height: 4)
     }
 
-    // MARK: - Steps
-
     @ViewBuilder
     private var stepContent: some View {
         switch step {
@@ -111,10 +107,10 @@ struct WizardContainerView: View {
                 question: "¿Qué tamaño tenía?",
                 subtitle: "Compáralo con animales comunes",
                 options: [
-                    WizardOption(systemImage: "hare.fill",           iconColor: Color.appGreen, label: "Pequeño",    detail: "Como un gato o conejo",  value: "pequeño"),
-                    WizardOption(systemImage: "dog.fill",            iconColor: Color.appGreen, label: "Mediano",    detail: "Como un perro mediano",  value: "mediano"),
-                    WizardOption(systemImage: "pawprint.fill",       iconColor: Color.appGreen, label: "Grande",     detail: "Como un lobo o puma",    value: "grande"),
-                    WizardOption(systemImage: "pawprint.circle.fill",iconColor: Color.appGreen, label: "Muy grande", detail: "Como un oso o venado",   value: "muy-grande"),
+                    WizardOption(systemImage: "hare.fill",            iconColor: Color.appGreen, label: "Pequeño",    detail: "Como un gato o conejo",  value: "pequeño"),
+                    WizardOption(systemImage: "dog.fill",             iconColor: Color.appGreen, label: "Mediano",    detail: "Como un perro mediano",  value: "mediano"),
+                    WizardOption(systemImage: "pawprint.fill",        iconColor: Color.appGreen, label: "Grande",     detail: "Como un lobo o puma",    value: "grande"),
+                    WizardOption(systemImage: "pawprint.circle.fill", iconColor: Color.appGreen, label: "Muy grande", detail: "Como un oso o venado",   value: "muy-grande"),
                 ]
             ) { value in answers.size = value; withAnimation { step = 2 } }
 
@@ -123,11 +119,11 @@ struct WizardContainerView: View {
                 question: "¿Qué color predominaba?",
                 subtitle: "El color más visible de su cuerpo",
                 options: [
-                    WizardOption(systemImage: "circle.fill", iconColor: Color(hex: "92400E"), label: "Marrón / café",  detail: "Tonos tierra o café",      value: "marron"),
-                    WizardOption(systemImage: "circle.fill", iconColor: Color(hex: "1F2937"), label: "Negro",          detail: "Oscuro predominante",      value: "negro"),
-                    WizardOption(systemImage: "circle.fill", iconColor: Color(hex: "9CA3AF"), label: "Gris",           detail: "Gris plateado o ceniza",   value: "gris"),
-                    WizardOption(systemImage: "circle.lefthalf.filled", iconColor: Color(hex: "374151"), label: "Negro y blanco", detail: "Partes oscuras y claras", value: "negro-blanco"),
-                    WizardOption(systemImage: "paintpalette.fill",      iconColor: Color.appGreen,       label: "Varios colores", detail: "Manchado o multicolor",   value: "varios"),
+                    WizardOption(systemImage: "circle.fill",           iconColor: Color(hex: "92400E"), label: "Marrón / café",  detail: "Tonos tierra o café",     value: "marron"),
+                    WizardOption(systemImage: "circle.fill",           iconColor: Color(hex: "1F2937"), label: "Negro",          detail: "Oscuro predominante",     value: "negro"),
+                    WizardOption(systemImage: "circle.fill",           iconColor: Color(hex: "9CA3AF"), label: "Gris",           detail: "Gris plateado o ceniza",  value: "gris"),
+                    WizardOption(systemImage: "circle.lefthalf.filled",iconColor: Color(hex: "374151"), label: "Negro y blanco", detail: "Partes oscuras y claras", value: "negro-blanco"),
+                    WizardOption(systemImage: "paintpalette.fill",     iconColor: Color.appGreen,       label: "Varios colores", detail: "Manchado o multicolor",   value: "varios"),
                 ]
             ) { value in answers.color = value; withAnimation { step = 3 } }
 
@@ -136,9 +132,9 @@ struct WizardContainerView: View {
                 question: "¿Dónde lo viste?",
                 subtitle: "El tipo de lugar del avistamiento",
                 options: [
-                    WizardOption(systemImage: "building.2.fill", iconColor: Color.appGreen, label: "Zona urbana",     detail: "Calle, colonia, jardín",      value: "urbano"),
-                    WizardOption(systemImage: "tree.fill",        iconColor: Color.appGreen, label: "Parque o bosque", detail: "Entre árboles y vegetación",  value: "parque"),
-                    WizardOption(systemImage: "mountain.2.fill",  iconColor: Color.appGreen, label: "Campo abierto",  detail: "Zonas rocosas o pastizal",    value: "campo"),
+                    WizardOption(systemImage: "building.2.fill", iconColor: Color.appGreen, label: "Zona urbana",     detail: "Calle, colonia, jardín",     value: "urbano"),
+                    WizardOption(systemImage: "tree.fill",        iconColor: Color.appGreen, label: "Parque o bosque", detail: "Entre árboles y vegetación", value: "parque"),
+                    WizardOption(systemImage: "mountain.2.fill",  iconColor: Color.appGreen, label: "Campo abierto",  detail: "Zonas rocosas o pastizal",   value: "campo"),
                 ]
             ) { value in answers.location = value; withAnimation { step = 4 } }
 
@@ -147,12 +143,12 @@ struct WizardContainerView: View {
                 question: "¿Qué te llamó la atención?",
                 subtitle: "La característica más destacada",
                 options: [
-                    WizardOption(systemImage: "theatermasks.fill",           iconColor: Color.appGreen, label: "Rayas o máscara",           detail: "Marcas en la cara o cuerpo", value: "rayas"),
-                    WizardOption(systemImage: "waveform",                    iconColor: Color.appGreen, label: "Cola muy larga",            detail: "Prominente y visible",       value: "cola-larga"),
-                    WizardOption(systemImage: "mouth.fill",                  iconColor: Color.appGreen, label: "Colmillos / hocico grande", detail: "Dientes o nariz notable",    value: "colmillos"),
-                    WizardOption(systemImage: "arrow.up.left.and.arrow.up.right", iconColor: Color.appGreen, label: "Cuernos o astas",     detail: "Ramificados o curvos",       value: "cuernos"),
-                    WizardOption(systemImage: "lizard.fill",                 iconColor: Color.appGreen, label: "Forma de serpiente",       detail: "Sin patas, reptil",          value: "serpiente"),
-                    WizardOption(systemImage: "questionmark.circle.fill",    iconColor: Color.appGreen, label: "Nada especial",            detail: "Apariencia típica",          value: "normal"),
+                    WizardOption(systemImage: "theatermasks.fill",                iconColor: Color.appGreen, label: "Rayas o máscara",           detail: "Marcas en la cara o cuerpo", value: "rayas"),
+                    WizardOption(systemImage: "waveform",                         iconColor: Color.appGreen, label: "Cola muy larga",            detail: "Prominente y visible",       value: "cola-larga"),
+                    WizardOption(systemImage: "mouth.fill",                       iconColor: Color.appGreen, label: "Colmillos / hocico grande", detail: "Dientes o nariz notable",    value: "colmillos"),
+                    WizardOption(systemImage: "arrow.up.left.and.arrow.up.right", iconColor: Color.appGreen, label: "Cuernos o astas",           detail: "Ramificados o curvos",       value: "cuernos"),
+                    WizardOption(systemImage: "lizard.fill",                      iconColor: Color.appGreen, label: "Forma de serpiente",        detail: "Sin patas, reptil",          value: "serpiente"),
+                    WizardOption(systemImage: "questionmark.circle.fill",         iconColor: Color.appGreen, label: "Nada especial",             detail: "Apariencia típica",          value: "normal"),
                 ]
             ) { value in answers.feature = value; withAnimation { showResults = true } }
         }
@@ -163,7 +159,7 @@ struct WizardContainerView: View {
     }
 }
 
-// MARK: - Reusable Step View
+// MARK: - Step View
 
 struct WizardStepView: View {
     let question : String
@@ -203,16 +199,13 @@ struct WizardStepView: View {
 
 struct WizardOptionRow: View {
     let option: WizardOption
-
     var body: some View {
         HStack(spacing: 14) {
-            // SF Symbol icon with tinted background
             Image(systemName: option.systemImage)
                 .font(.system(size: 22, weight: .medium))
                 .foregroundStyle(option.iconColor)
                 .frame(width: 52, height: 52)
                 .background(option.iconColor.opacity(0.12), in: RoundedRectangle(cornerRadius: 14))
-
             VStack(alignment: .leading, spacing: 2) {
                 Text(option.label)
                     .font(.system(size: 16, weight: .semibold))
@@ -221,9 +214,7 @@ struct WizardOptionRow: View {
                     .font(.system(size: 13))
                     .foregroundStyle(Color.appTextSecondary)
             }
-
             Spacer()
-
             Image(systemName: "chevron.right")
                 .font(.system(size: 13, weight: .medium))
                 .foregroundStyle(Color.appTextTertiary)
@@ -259,7 +250,6 @@ struct WizardResultsView: View {
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading, spacing: 20) {
-
                 VStack(alignment: .leading, spacing: 8) {
                     Text("Posibles coincidencias")
                         .font(.system(size: 28, weight: .bold))
@@ -267,7 +257,6 @@ struct WizardResultsView: View {
                     Text("Basado en tus respuestas, podrías haber visto:")
                         .font(.system(size: 14))
                         .foregroundStyle(Color.appTextSecondary)
-                    // Chips de tags
                     HStack(spacing: 8) {
                         ForEach(answers.allTags, id: \.self) { tag in
                             Text(tag)
@@ -325,18 +314,9 @@ struct ResultRow: View {
 
     var body: some View {
         HStack(spacing: 0) {
-            Group {
-                if UIImage(named: animal.imageURL) != nil {
-                    Image(animal.imageURL).resizable().scaledToFill()
-                } else {
-                    Rectangle().fill(Color.appGreenLight)
-                        .overlay {
-                            Image(systemName: "pawprint.fill")
-                                .foregroundStyle(.white.opacity(0.6))
-                        }
-                }
-            }
-            .frame(width: 100, height: 110).clipped()
+            AnimalImage(scientificName: animal.scientificName, height: 110)
+                .frame(width: 100, height: 110)
+                .clipped()
 
             VStack(alignment: .leading, spacing: 6) {
                 if isBest {
