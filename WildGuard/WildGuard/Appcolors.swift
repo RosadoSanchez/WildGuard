@@ -15,6 +15,7 @@ extension Color {
     static let appGreenMint    = Color(hex: "D1FAE5")
     static let appGreenPale    = Color(hex: "B7D4C0")   // placeholder gradiente para card
     static let appGreenMedium  = Color(hex: "4A9470")   // placeholder para detail view
+    static let appYellow       = Color(hex: "#ecb743")
 
     // ── fondos
     static let appBackground   = Color(hex: "F2F1EC")
