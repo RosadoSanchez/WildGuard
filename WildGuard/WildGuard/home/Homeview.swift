@@ -236,10 +236,14 @@ struct Homeview: View {
                 .foregroundStyle(Color.appTextPrimary)
 
             HStack(spacing: 12) {
-                actionCard(icon: "checkmark.shield.fill", title: "Prevención",
-                           subtitle: "y cuidados",        color: Color(hex: "F4A261"))
-                actionCard(icon: "leaf.fill",             title: "Aprender",
-                           subtitle: "de la wildlife",    color: Color.appGreen)
+                NavigationLink(destination: AnimalMenuView()) {
+                    actionCard(
+                        icon: "leaf.fill",
+                        title: "Aprender",
+                        subtitle: "de la wildlife",
+                        color: Color.appGreen
+                    )
+                }
             }
             .frame(height: 130)
 
