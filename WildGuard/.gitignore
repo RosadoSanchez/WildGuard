@@ -1,0 +1,23 @@
+# Xcode user settings
+xcuserdata/
+
+# Build artifacts
+build/
+DerivedData/
+
+# macOS
+.DS_Store
+
+# App packaging
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Dependency managers
+Pods/
+.build/
+Carthage/Build/
+
+# Secrets
+*.env
+GoogleService-Info.plist
