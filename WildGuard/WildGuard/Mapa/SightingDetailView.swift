@@ -1,8 +1,11 @@
 import SwiftUI
 
 struct SightingDetailView: View {
+    
     let sighting: Sighting
-
+    
+    @State private var showPrecautions = false
+    
     var body: some View {
         VStack(spacing: 0) {
 
@@ -31,7 +34,7 @@ struct SightingDetailView: View {
             }
 
             Button("Ver precauciones") {
-                // acción
+                showPrecautions = true
             }
             .frame(maxWidth: .infinity)
             .padding()
@@ -39,7 +42,10 @@ struct SightingDetailView: View {
             .foregroundColor(.white)
             .cornerRadius(12)
             .padding()
-            .background(.ultraThinMaterial) 
+            .background(.ultraThinMaterial)
+        }
+        .sheet(isPresented: $showPrecautions) {
+            PrecaucionesView(animal: sighting.animal)
         }
     }
 }
