@@ -243,18 +243,25 @@ struct Homeview: View {
             }
             .frame(height: 130)
 
-            Button {} label: {
+            Button(action: {
+                callNumber("9514763358")
+            }) {
                 HStack(spacing: 16) {
+                    
                     Text("911")
                         .font(.system(size: 22, weight: .heavy))
                         .foregroundStyle(.white.opacity(0.9))
                         .frame(width: 56, height: 56)
                         .background(.white.opacity(0.2), in: Circle())
+                    
                     VStack(alignment: .leading, spacing: 2) {
                         Text("Emergencia")
-                            .font(.system(size: 16, weight: .bold)).foregroundStyle(.white)
+                            .font(.system(size: 16, weight: .bold))
+                            .foregroundStyle(.white)
+                        
                         Text("Llama si hay peligro inmediato")
-                            .font(.system(size: 13)).foregroundStyle(.white.opacity(0.85))
+                            .font(.system(size: 13))
+                            .foregroundStyle(.white.opacity(0.85))
                     }
                     Spacer()
                     Image(systemName: "phone.fill")
